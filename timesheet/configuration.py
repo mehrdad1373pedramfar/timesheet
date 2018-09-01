@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from pymlconf import ConfigManager, IGNORE
+from pymlconf import Root
 from os import path, mkdir
 from appdirs import user_data_dir, user_config_dir
 
@@ -26,20 +26,20 @@ def init_config(config_file=None):
     if not path.exists(data_dir):
         mkdir(data_dir)
 
-    config_files = [user_config_file]
-    if config_file:
-        config_files.append(config_file)
-
-    _cfg = ConfigManager(
+    _cfg = Root(
         __builtin_config__,
-        files=config_files,
         context=dict(
             data_dir=data_dir,
             time_format='"%Y-%m-%d %H:%M"',
             date_format='"%Y-%m-%d"'
-        ),
-        missing_file_behavior=IGNORE
+        )
     )
+
+    if path.exists(user_config_file):
+        _cfg.load_file(user_config_file)
+
+    if config_file:
+        _cfg.load_file(config_file)
 
 
 class ConfigProxy(object):
