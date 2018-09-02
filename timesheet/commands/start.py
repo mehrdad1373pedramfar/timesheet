@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
+import getpass
+import argparse
+
+from timesheet import config
 from timesheet.commands import Command
 from timesheet.models import Subject, Task, DBSession
 from timesheet.commands.completers import subject_completer, task_completer
-import argparse
+
 __author__ = 'vahid'
 
 
@@ -27,7 +31,7 @@ class StartCommand(Command):
                 return
 
         subject = Subject.ensure(self.args.subject)
-        task = Task(title=' '.join(self.args.task))
+        task = Task(title=' '.join(self.args.task), user = config.user if hasattr(config, 'user') else getpass.getuser())
         subject.tasks.append(task)
 
         DBSession.commit()

@@ -47,6 +47,7 @@ class Task(BaseModel):
     start_time = Column(DateTime, nullable=False, default=datetime.now)
     end_time = Column(DateTime, nullable=True)
     subject_id = Column(Integer, ForeignKey('subject.id'))
+    user = Column(String(100), nullable=False)
 
     subject = relationship("Subject", backref=backref('tasks', order_by=start_time))
 
@@ -74,8 +75,9 @@ class Task(BaseModel):
         return '%02d:%02d' % (hours, remainder / 60)
 
     def __repr__(self):
-        return '\n%-12s%s\n%-12s%s\n%-12s%s\n%-12s%s\n%-12s%s' % (
+        return '\n%-12s%s\n%-12s%s\n%-12s%s\n%-12s%s\n%-12s%s\n%-12s%s' % (
             'Subject', "" if not self.subject else self.subject.title,
+            'User', self.user,
             'Title', self.title,
             'Start', self.start_time_string,
             'End', self.end_time_string,

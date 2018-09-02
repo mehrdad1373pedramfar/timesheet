@@ -15,7 +15,6 @@ db:
 
 datetime_format: %(time_format)s
 date_format: %(date_format)s
-
 """
 
 _cfg = None
