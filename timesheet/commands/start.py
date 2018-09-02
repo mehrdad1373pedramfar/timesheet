@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import getpass
+import os
 import argparse
 
 from timesheet import config
@@ -31,7 +31,7 @@ class StartCommand(Command):
                 return
 
         subject = Subject.ensure(self.args.subject)
-        task = Task(title=' '.join(self.args.task), user = config.user if hasattr(config, 'user') else getpass.getuser())
+        task = Task(title=' '.join(self.args.task), user = config.user if hasattr(config, 'user') else os.environ.get('USER'))
         subject.tasks.append(task)
 
         DBSession.commit()
