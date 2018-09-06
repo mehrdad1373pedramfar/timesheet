@@ -10,7 +10,7 @@ user_config_file = path.abspath(path.join(user_config_dir(), 'timesheetrc'))
 
 __builtin_config__ = """
 db:
-  uri: sqlite:///%(data_dir)s/timesheet.sqlite
+  uri: postgresql://postgres:postgres@localhost/gecko_dev
   echo: false
 
 datetime_format: %(time_format)s
